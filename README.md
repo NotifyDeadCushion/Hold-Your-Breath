@@ -4,6 +4,8 @@ Lets you steady your aim while ADS with a keybind, calming BHS's arm-injury sway
 
 Instead of the constant shake from a badly wounded arm, hold the key and your aim eases down to fully steady. Let go and it eases back, with a brief "out of breath" spike before settling to normal.
 
+https://github.com/user-attachments/assets/ecd6f63d-f764-48bc-8d83-e141fd935d53
+
 ## How to Use
 
 **Hold (or press to toggle) the keybind, Space by default, while aiming down sights.**
