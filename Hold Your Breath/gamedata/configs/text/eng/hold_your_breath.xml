@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="windows-1251" ?>
+<string_table>
+	<string id="ui_mcm_menu_hold_your_breath">
+		<text>Hold Your Breath</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_title">
+		<text>Hold Your Breath</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_enabled">
+		<text>Enable mod</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_enabled_desc">
+		<text>If disabled, the keybind below has no effect.</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_activation_mode">
+		<text>Activation Mode</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_activation_mode_desc">
+		<text>Hold: sway is reduced only while the key is held down. Toggle: press once to start, press again to stop.</text>
+	</string>
+	<string id="hold_your_breath_activation_mode_lst_hold">
+		<text>Hold</text>
+	</string>
+	<string id="hold_your_breath_activation_mode_lst_toggle">
+		<text>Toggle</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_keybind">
+		<text>Hold Your Breath Keybind</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_keybind_desc">
+		<text>Key used to hold breath while aiming down sights. Only active while aiming; the key's normal action works as usual otherwise.</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_hold_in_time">
+		<text>Hold-In Time</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_hold_in_time_desc">
+		<text>How long, in seconds, sway takes to ease down to fully steady after pressing the key.</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_ramp_time">
+		<text>Release Ramp Time</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_ramp_time_desc">
+		<text>How long, in seconds, the "out of breath" sway spike takes to ramp up right after releasing the key.</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_spike">
+		<text>Release Spike</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_spike_desc">
+		<text>"Out of breath" sway spike right after releasing the key, before it eases back down to normal. 1 disables the spike.</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_time">
+		<text>Release Time</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_release_time_desc">
+		<text>How long, in seconds, the release spike takes to ease back down to normal sway.</text>
+	</string>
+</string_table>

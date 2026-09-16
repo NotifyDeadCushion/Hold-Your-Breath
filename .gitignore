@@ -1,0 +1,34 @@
+# VS Code
+.vscode/
+*.code-workspace
+
+# Claude
+.Claude
+CLAUDE.md
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build/output
+bin/
+obj/
+build/
+out/
+
+# Archives
+*.zip
+*.7z
+*.rar
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.bak

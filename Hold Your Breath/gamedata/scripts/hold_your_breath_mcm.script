@@ -1,0 +1,17 @@
+function on_mcm_load()
+	op = {
+		id = "hold_your_breath", sh = true, gr = {
+			{ id = "title", type = "slide", link = "ui_options_slider_player", text = "ui_mcm_hold_your_breath_title", size = { 512, 50 }, spacing = 20 },
+			{ id = "divider", type = "line" },
+			{ id = "enabled", type = "check", val = 1, def = true },
+			{ id = "activation_mode", type = "list", val = 0, def = "hold", content = { { "hold", "hold" }, { "toggle", "toggle" } } },
+			{ id = "keybind", type = "key_bind", val = 2, def = DIK_keys.DIK_SPACE },
+			{ id = "divider2", type = "line" },
+			{ id = "hold_in_time", type = "track", val = 2, def = 1.0, min = 0.05, max = 3, step = 0.05 },
+			{ id = "release_ramp_time", type = "track", val = 2, def = 0.3, min = 0.05, max = 1, step = 0.05 },
+			{ id = "release_spike", type = "track", val = 2, def = 3, min = 1, max = 4, step = 0.1 },
+			{ id = "release_time", type = "track", val = 2, def = 0.6, min = 0.05, max = 1.5, step = 0.05 },
+		}
+	}
+	return op
+end
