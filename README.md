@@ -36,4 +36,4 @@ Install the mod through **Mod Organizer 2** as you would any other Anomaly mod. 
 
 ## Compatibility
 
-Requires GAMMA's BHS (Boredom's Hardcore Sandbox) limb-injury system with its "New Limb Penalties" feature enabled. This mod only has a visible effect while BHS's own arm-injury sway is active — that is, while arm health is below BHS's configured threshold. At full arm health, or with New Limb Penalties disabled, there's nothing to steady.
+Requires GAMMA's BHS limb-injury system with its "New Limb Penalties" feature enabled. This mod only has a visible effect while BHS's own arm-injury sway is active — that is, while arm health is below BHS's configured threshold. At full arm health, or with New Limb Penalties disabled, there's nothing to steady.
