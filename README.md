@@ -18,6 +18,7 @@ Sway eases down to steady over the Hold-In Time. Release the key and sway ramps 
 * **Smooth Hold-In:** Steadying eases in gradually instead of snapping to zero.
 * **Out of Breath Release:** Letting go ramps up to a brief, exaggerated sway spike before easing back down to normal, simulating the strain of holding your breath.
 * **Hold or Toggle:** Choose whether the key must be held down, or pressed once to toggle the effect on and off.
+* **Costs Stamina:** Holding your breath drains your stamina bar, so you can't do it forever — running out releases the key automatically. Every release, forced or voluntary, comes with a breathy exhale.
 * **No Custom Exe Required:** Works on a stock Anomaly-based exe — no engine patch needed.
 
 ## Toggles & Options
@@ -29,6 +30,7 @@ Sway eases down to steady over the Hold-In Time. Release the key and sway ramps 
 * **Release Ramp Time:** How long the "out of breath" spike takes to ramp up right after releasing the key.
 * **Release Spike:** How much bigger than normal the spike gets. Set to 1 to disable it.
 * **Release Time:** How long the spike takes to ease back down to normal sway.
+* **Stamina Drain Time:** Seconds of continuously holding breath needed to fully drain stamina. Set to 0 to hold your breath for free.
 
 ## Installation
 

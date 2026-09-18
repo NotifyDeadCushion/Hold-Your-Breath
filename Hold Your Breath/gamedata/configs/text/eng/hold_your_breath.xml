@@ -54,4 +54,10 @@
 	<string id="ui_mcm_hold_your_breath_release_time_desc">
 		<text>How long, in seconds, the release spike takes to ease back down to normal sway.</text>
 	</string>
+	<string id="ui_mcm_hold_your_breath_stamina_drain_time">
+		<text>Stamina Drain Time</text>
+	</string>
+	<string id="ui_mcm_hold_your_breath_stamina_drain_time_desc">
+		<text>Seconds of continuously holding breath needed to fully drain stamina. 0 disables the stamina cost.</text>
+	</string>
 </string_table>

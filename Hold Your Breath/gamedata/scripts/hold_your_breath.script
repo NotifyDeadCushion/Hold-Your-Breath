@@ -1,10 +1,12 @@
 -- Hold Your Breath
--- Version: 0.71
+-- Version: 0.717
 -- Author: Boeker
 
 local BHS_EFFECTOR_ID = 9921
 local BHS_EFFECTS_MULT = 1 -- zzz_player_injuries.script: effects_mult (never reassigned there)
 local BHS_MAXHP_ARM = 5 -- zzz_player_injuries.script: maxhp.rightarm / maxhp.leftarm
+local EXHAUSTED_SOUND = "characters_voice\\player\\exhausted_3" -- plain breath, not a dramatic gasp - the only variant wanted; _1/_2/_4 are gaspier and unwanted
+local STAMINA_STOP_THRESHOLD = 0.10 -- auto-release once stamina drops to this fraction remaining, instead of waiting for it to hit exactly 0
 
 -- ----------------------------------------------------------------------------
 -- CONFIG
@@ -17,6 +19,7 @@ CONFIG = {
 	release_ramp_time = 0.3, -- eases 0 -> the spike on release, instead of an instant jump
 	release_spike = 3, -- release ramps up to real target * this, before easing back down to it
 	release_time = 0.6,
+	stamina_drain_time = 45, -- seconds of holding breath to fully drain stamina; 0 disables the cost
 }
 
 -- ----------------------------------------------------------------------------
@@ -30,12 +33,13 @@ STATE = {
 	phase_start = 0,
 	phase_start_factor = 0, -- value STATE.factor is easing FROM in the current phase
 	release_target = 0, -- cam_power computed fresh at the moment of release
+	stamina_last_tick = 0, -- time_global() of the last stamina drain step, reset on press
 }
 
 -- ----------------------------------------------------------------------------
 -- Helpers, alphabetical
 -- ----------------------------------------------------------------------------
-local compute_cam_power, get_body_state, smoothstep
+local compute_cam_power, ease_out, get_body_state, smoothstep
 
 -- Replicates BHS's shaking_hands() cam_power formula exactly. Reads health
 -- via utils_obj since BHS's own health/maxhp/effects_mult are file-local.
@@ -87,6 +91,13 @@ compute_cam_power = function()
 	return cam_power
 end
 
+-- Fast initial response, decelerating into the target - used for
+-- release_ramp so the spike visibly starts moving the instant the key is
+-- released, instead of smoothstep's near-zero initial rate reading as a delay.
+ease_out = function(t)
+	return 1 - (1 - t) * (1 - t)
+end
+
 -- Own copy of BHS's get_body_state() - its global isn't reliably callable
 -- from another script at runtime, so this is inlined instead.
 get_body_state = function()
@@ -114,6 +125,17 @@ function actor_on_update()
 	if STATE.phase == "idle" then return end
 	if not level.check_cam_effector(BHS_EFFECTOR_ID) then return end
 
+	if STATE.holding_breath and CONFIG.stamina_drain_time > 0 then
+		local now = time_global()
+		local dt = (now - STATE.stamina_last_tick) / 1000
+		STATE.stamina_last_tick = now
+		db.actor.power = clamp(db.actor.power - dt / CONFIG.stamina_drain_time, 0, 1)
+		if db.actor.power <= STAMINA_STOP_THRESHOLD then
+			stop_holding_breath()
+			return
+		end
+	end
+
 	if STATE.phase == "held" then
 		STATE.factor = 0
 	else
@@ -128,8 +150,9 @@ function actor_on_update()
 
 		local elapsed = (time_global() - STATE.phase_start) / 1000
 		local t = (duration > 0) and clamp(elapsed / duration, 0, 1) or 1
+		local eased_t = (STATE.phase == "release_ramp") and ease_out(t) or smoothstep(t)
 
-		STATE.factor = STATE.phase_start_factor + (target - STATE.phase_start_factor) * smoothstep(t)
+		STATE.factor = STATE.phase_start_factor + (target - STATE.phase_start_factor) * eased_t
 
 		if t >= 1 then
 			STATE.factor = target
@@ -168,6 +191,7 @@ function get_config()
 	CONFIG.release_ramp_time = ui_mcm.get("hold_your_breath/release_ramp_time") or CONFIG.release_ramp_time
 	CONFIG.release_spike = ui_mcm.get("hold_your_breath/release_spike") or CONFIG.release_spike
 	CONFIG.release_time = ui_mcm.get("hold_your_breath/release_time") or CONFIG.release_time
+	CONFIG.stamina_drain_time = ui_mcm.get("hold_your_breath/stamina_drain_time") or CONFIG.stamina_drain_time
 end
 
 function on_before_key_hold(key, bind, dis, flags)
@@ -228,10 +252,12 @@ function start_holding_breath()
 	STATE.phase = "holding_in"
 	STATE.phase_start = time_global()
 	STATE.phase_start_factor = compute_cam_power()
+	STATE.stamina_last_tick = STATE.phase_start
 end
 
 -- Eases up to a spike above the real target, then actor_on_update eases
--- back down to it.
+-- back down to it. Also plays EXHAUSTED_SOUND on every release (not just
+-- when actually out of stamina), wrapped in pcall as a general safety net.
 function stop_holding_breath()
 	if not STATE.holding_breath then return end
 	STATE.holding_breath = false
@@ -239,4 +265,8 @@ function stop_holding_breath()
 	STATE.phase = "release_ramp"
 	STATE.phase_start = time_global()
 	STATE.phase_start_factor = STATE.factor
+	pcall(function()
+		local snd = sound_object(EXHAUSTED_SOUND)
+		snd:play_no_feedback(db.actor, sound_object.s2d, 0, VEC_ZERO, 1.0, 1.0)
+	end)
 end

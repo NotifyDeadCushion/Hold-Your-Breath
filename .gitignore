@@ -2,7 +2,7 @@
 .vscode/
 *.code-workspace
 
-# Claude
+# Local notes
 .Claude
 CLAUDE.md
 
